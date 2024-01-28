@@ -19,6 +19,41 @@ startingLives = 4
 offset = Vector2(0, 50)
 editor_draw_limits = true
 
+[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+z_index = 4096
+offset_left = -978.0
+offset_top = -423.0
+offset_right = -938.0
+offset_bottom = -383.0
+scale = Vector2(10.6499, 25.8798)
+color = Color(0.639216, 0.639216, 0.639216, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="Camera2D"]
+z_index = 4096
+offset_left = 552.0
+offset_top = -439.0
+offset_right = 592.0
+offset_bottom = -399.0
+scale = Vector2(10.6499, 25.8798)
+color = Color(0.639216, 0.639216, 0.639216, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Camera2D"]
+z_index = 4096
+offset_left = -972.0
+offset_top = -380.0
+offset_right = -932.0
+offset_bottom = -340.0
+scale = Vector2(48.278, -12.9415)
+color = Color(0.639216, 0.639216, 0.639216, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Camera2D"]
+offset_left = -975.0
+offset_top = 983.0
+offset_right = -935.0
+offset_bottom = 1023.0
+scale = Vector2(48.278, -12.9415)
+color = Color(0.639216, 0.639216, 0.639216, 1)
+
 [node name="Timer" type="Label" parent="."]
 z_index = 4000
 offset_left = 339.0

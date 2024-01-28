@@ -35,9 +35,9 @@ func _process(delta):
 			balls.erase(ball)
 
 func spawnBall():
-	randomize()
+	rng.randomize()
 	var newBall = ball.instantiate()
-	var x = rng.randf_range(300, 300.0)
+	var x = rng.randf_range(-300.0, 300.0)
 	newBall.global_transform.origin = Vector2(x, -400)
 	add_child(newBall)
 	balls.append(newBall)

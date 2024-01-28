@@ -13,6 +13,8 @@ var Selected : bool
 var HeldBall : RigidBody2D
 var HandVelocity : Vector2
 
+var rng = RandomNumberGenerator.new()
+
 func _ready():
 	Selected = false
 
@@ -50,7 +52,9 @@ func throw():
 		HeldBall.sleeping = false
 		HeldBall.linear_velocity.y = 0
 		
-		var dir = Vector2.UP + Vector2(-OffsetDir * 0.01,0)
+		rng.randomize()
+		var x = rng.randf_range(0.004, 0.0205)
+		var dir = Vector2.UP + Vector2(-OffsetDir * x,0)
 		HeldBall.apply_impulse(dir * ThrowSpeed)
 		HeldBall.set_collision_layer(2)
 		HeldBall = null
