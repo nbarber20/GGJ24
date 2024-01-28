@@ -36,9 +36,25 @@ func _process(delta):
 	if global_position.y < Body.global_position.y - HeightLimit:
 		global_position.y = Body.global_position.y - HeightLimit
 	
+	if OffsetDir > 0:
+		if global_position.x < Body.global_position.x + (OffsetDir * 0.5):
+			global_position.x = Body.global_position.x + (OffsetDir * 0.5)
+	elif global_position.x > Body.global_position.x + (OffsetDir * 0.5):
+			global_position.x = Body.global_position.x + (OffsetDir * 0.5)
+			
 	if HeldBall:
 		HeldBall.global_transform.origin = global_position
-	
+		
+func throw():
+	if HeldBall:
+		HeldBall.sleeping = false
+		HeldBall.linear_velocity.y = 0
+		
+		var dir = Vector2.UP + Vector2(-OffsetDir * 0.01,0)
+		HeldBall.apply_impulse(dir * ThrowSpeed)
+		HeldBall.set_collision_layer(2)
+		HeldBall = null
+
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -50,21 +66,23 @@ func _input(event):
 					Selected = true
 		elif event.is_released():
 			Selected = false
-			if HeldBall:
-				HeldBall.sleeping = false
-				HeldBall.linear_velocity.y = 0
-				
-				var dir = Vector2.UP + Vector2(-OffsetDir * 0.01,0)
-				HeldBall.apply_impulse(dir * ThrowSpeed)
-				HeldBall.set_collision_layer(2)
-				HeldBall = null
+			throw()
 
 func _on_area_2d_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	if !Selected:
-		return
 	var layer = body.get_collision_layer()
 	if(layer == 2):
 		if body.linear_velocity.y > 10:
-			HeldBall = body
-			HeldBall.sleeping = true
-			HeldBall.set_collision_layer(0)
+			if Selected:
+				if HeldBall:
+					var dir = Vector2.UP + Vector2(-OffsetDir * 0.01,0)
+					body.apply_impulse(dir * ThrowSpeed)
+					body.set_collision_layer(2)
+				else:
+					HeldBall = body
+					HeldBall.sleeping = true
+					HeldBall.set_collision_layer(0)
+					HeldBall.global_transform.origin = global_position
+			else:
+					var dir = Vector2.UP + Vector2(-OffsetDir * 0.01,0)
+					body.apply_impulse(dir * ThrowSpeed)
+					body.set_collision_layer(2)

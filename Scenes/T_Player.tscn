@@ -26,6 +26,7 @@ RFoot = NodePath("ClownCycleSeat/ClownCycleTire/ClownCyclePeddal2/ClownShoeR")
 Wheel = NodePath("ClownCycleSeat/ClownCycleTire")
 MoveSpeed = 10.0
 WheelSpeed = 0.01
+MaxX = 550.0
 
 [node name="ClownCycleSeat" type="Sprite2D" parent="PlayerBody"]
 position = Vector2(-3, 225)

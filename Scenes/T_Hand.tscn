@@ -12,7 +12,7 @@ texture = ExtResource("1_4pfdq")
 script = ExtResource("2_ux1h4")
 Radius = 100.0
 HeightLimit = 150.0
-ReturnSpeed = 0.75
+ReturnSpeed = 0.5
 MouseMoveSpeed = 10.0
 ThrowSpeed = 1200.0
 

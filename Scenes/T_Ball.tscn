@@ -15,6 +15,7 @@ linear_damp = 2.0
 shape = SubResource("CircleShape2D_ly16u")
 
 [node name="ClownNose" type="Sprite2D" parent="."]
-position = Vector2(1, 4.225)
+modulate = Color(1, 0.298039, 0.439216, 1)
+position = Vector2(-3, -2)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_453d1")

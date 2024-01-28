@@ -8,12 +8,22 @@ extends Node2D
 @export var MoveSpeed : float
 @export var WheelSpeed : float
 
+@export var MaxX : float
+
 func _ready():
 	pass
 
 func _process(delta):
 	var target = (LHand.position + RHand.position) * 0.5
 	var move = position.lerp(Vector2(target.x,0), delta * MoveSpeed)
+	
+	if move.x > 0:
+		if move.x > MaxX:
+			move.x = MaxX
+	elif move.x < -MaxX:
+		move.x = -MaxX
+	
+	
 	var moveDelta = -(position - move).x
 	position = move
 	

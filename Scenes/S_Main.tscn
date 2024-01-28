@@ -1,28 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://3i0yb0lorpmg"]
+[gd_scene load_steps=9 format=3 uid="uid://3i0yb0lorpmg"]
 
+[ext_resource type="Texture2D" uid="uid://ckw0f46egvncu" path="res://Sprites/bg.png" id="1_6kuf2"]
+[ext_resource type="Texture2D" uid="uid://btqod15mthwm7" path="res://Sprites/stage.png" id="1_cu4qc"]
+[ext_resource type="Script" path="res://Scripts/mainScnManager.gd" id="1_l8cjt"]
 [ext_resource type="PackedScene" uid="uid://bwso7d8vs5ogv" path="res://Scenes/T_Player.tscn" id="1_yjcoj"]
-[ext_resource type="PackedScene" uid="uid://wbkgvbdr8nta" path="res://Scenes/T_Ball.tscn" id="2_2n2e1"]
+[ext_resource type="Texture2D" uid="uid://by8preny2d7nv" path="res://Sprites/crowd.png" id="2_6cajj"]
+[ext_resource type="Texture2D" uid="uid://b2s1am7i00v4k" path="res://Sprites/crowdAngery.png" id="2_jie4g"]
+[ext_resource type="Texture2D" uid="uid://bckhnuyhn3kil" path="res://Sprites/curtains.png" id="4_4rfek"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dprp0"]
-size = Vector2(1174, 141)
+size = Vector2(1160, 174.5)
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("bg")]
+script = ExtResource("1_l8cjt")
+bg = NodePath("Stage3")
+bgAngry = ExtResource("2_jie4g")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-editor_draw_limits = true
+[node name="Stage2" type="Sprite2D" parent="."]
+position = Vector2(1, 50)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("1_6kuf2")
+
+[node name="Stage3" type="Sprite2D" parent="."]
+position = Vector2(1, 50)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("2_6cajj")
+
+[node name="Stage" type="Sprite2D" parent="."]
+position = Vector2(1, 50)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("1_cu4qc")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-4, 372)
+position = Vector2(-1, 400.75)
 shape = SubResource("RectangleShape2D_dprp0")
 
 [node name="Player" parent="." instance=ExtResource("1_yjcoj")]
-position = Vector2(2, 51)
-scale = Vector2(0.7, 0.7)
+position = Vector2(0, 94)
+scale = Vector2(0.6, 0.6)
 
-[node name="TBall" parent="." instance=ExtResource("2_2n2e1")]
-position = Vector2(-313, -255)
-
-[node name="TBall2" parent="." instance=ExtResource("2_2n2e1")]
-position = Vector2(307, -745)
+[node name="Curtains" type="Sprite2D" parent="."]
+z_index = 100
+position = Vector2(1, 52)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("4_4rfek")
