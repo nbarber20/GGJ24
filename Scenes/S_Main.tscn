@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://3i0yb0lorpmg"]
+
+[ext_resource type="PackedScene" uid="uid://bwso7d8vs5ogv" path="res://Scenes/T_Player.tscn" id="1_yjcoj"]
+[ext_resource type="PackedScene" uid="uid://wbkgvbdr8nta" path="res://Scenes/T_Ball.tscn" id="2_2n2e1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dprp0"]
+size = Vector2(1174, 141)
+
+[node name="Main" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+editor_draw_limits = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-4, 372)
+shape = SubResource("RectangleShape2D_dprp0")
+
+[node name="Player" parent="." instance=ExtResource("1_yjcoj")]
+position = Vector2(2, 51)
+scale = Vector2(0.7, 0.7)
+
+[node name="TBall" parent="." instance=ExtResource("2_2n2e1")]
+position = Vector2(-313, -255)
+
+[node name="TBall2" parent="." instance=ExtResource("2_2n2e1")]
+position = Vector2(307, -745)

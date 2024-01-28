@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://ycbp8x8aevo8"]
+
+[ext_resource type="Texture2D" uid="uid://fbiyi45jxjhi" path="res://Sprites/clown.png" id="1_33hra"]
+
+[resource]
+atlas = ExtResource("1_33hra")
+region = Rect2(149.416, 54.4169, 144, 137.333)

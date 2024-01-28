@@ -1,0 +1,113 @@
+[gd_scene load_steps=15 format=3 uid="uid://bwso7d8vs5ogv"]
+
+[ext_resource type="Texture2D" uid="uid://c7g8c8eq5twq6" path="res://Sprites/clown_eye_back.tres" id="2_cl0v4"]
+[ext_resource type="PackedScene" uid="uid://bo33dsy43il3r" path="res://Scenes/T_Hand.tscn" id="2_eyyle"]
+[ext_resource type="Texture2D" uid="uid://bn8akmyiedfg0" path="res://Sprites/clown_body.tres" id="2_jf6kt"]
+[ext_resource type="Texture2D" uid="uid://5c3toaisbsql" path="res://Sprites/clown_hair.tres" id="2_oivnp"]
+[ext_resource type="Texture2D" uid="uid://2p7ptcrq6dwt" path="res://Sprites/clown_shoe.tres" id="2_p8gp3"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="2_qr44x"]
+[ext_resource type="Texture2D" uid="uid://cfnhl0u6wdvso" path="res://Sprites/clown_eye.tres" id="3_1dk1o"]
+[ext_resource type="Texture2D" uid="uid://ycbp8x8aevo8" path="res://Sprites/clown_head.tres" id="3_ko0cy"]
+[ext_resource type="Texture2D" uid="uid://y77skdgovwmd" path="res://Sprites/clown_mouth.tres" id="6_0lcts"]
+[ext_resource type="Texture2D" uid="uid://dxao55hh5vxpt" path="res://Sprites/clown_brow.tres" id="6_sryxx"]
+[ext_resource type="Texture2D" uid="uid://ckit4tcq6xjcq" path="res://Sprites/clown_nose.tres" id="8_342s0"]
+[ext_resource type="Texture2D" uid="uid://b0p5fgfw2sb6t" path="res://Sprites/clown_cycleSeat.tres" id="12_1if5v"]
+[ext_resource type="Texture2D" uid="uid://br5mdiwepq6en" path="res://Sprites/clown_cycleTire.tres" id="12_8i7em"]
+[ext_resource type="Texture2D" uid="uid://ddnrov0v6fhm5" path="res://Sprites/clown_cyclePeddal.tres" id="14_jb0ks"]
+
+[node name="Player" type="Node2D"]
+
+[node name="PlayerBody" type="Sprite2D" parent="." node_paths=PackedStringArray("LHand", "RHand", "LFoot", "RFoot", "Wheel")]
+script = ExtResource("2_qr44x")
+LHand = NodePath("../L_Hand")
+RHand = NodePath("../R_Hand")
+LFoot = NodePath("ClownCycleSeat/ClownCycleTire/ClownCyclePeddal/ClownShoeL")
+RFoot = NodePath("ClownCycleSeat/ClownCycleTire/ClownCyclePeddal2/ClownShoeR")
+Wheel = NodePath("ClownCycleSeat/ClownCycleTire")
+MoveSpeed = 10.0
+WheelSpeed = 0.01
+
+[node name="ClownCycleSeat" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(-3, 225)
+texture = ExtResource("12_1if5v")
+
+[node name="ClownCycleTire" type="Sprite2D" parent="PlayerBody/ClownCycleSeat"]
+position = Vector2(-1, 68)
+texture = ExtResource("12_8i7em")
+
+[node name="ClownCyclePeddal" type="Sprite2D" parent="PlayerBody/ClownCycleSeat/ClownCycleTire"]
+position = Vector2(1, 0)
+texture = ExtResource("14_jb0ks")
+offset = Vector2(15, 20)
+
+[node name="ClownShoeL" type="Sprite2D" parent="PlayerBody/ClownCycleSeat/ClownCycleTire/ClownCyclePeddal"]
+position = Vector2(31, 40)
+texture = ExtResource("2_p8gp3")
+offset = Vector2(-30, -30)
+
+[node name="ClownCyclePeddal2" type="Sprite2D" parent="PlayerBody/ClownCycleSeat/ClownCycleTire"]
+z_index = -1
+position = Vector2(0, -1)
+rotation = 3.14159
+texture = ExtResource("14_jb0ks")
+offset = Vector2(15, 20)
+
+[node name="ClownShoeR" type="Sprite2D" parent="PlayerBody/ClownCycleSeat/ClownCycleTire/ClownCyclePeddal2"]
+modulate = Color(0.666667, 0.666667, 0.666667, 1)
+position = Vector2(31, 39)
+rotation = 3.14159
+texture = ExtResource("2_p8gp3")
+offset = Vector2(-30, -30)
+
+[node name="ClownBody" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(-8, 85)
+texture = ExtResource("2_jf6kt")
+
+[node name="ClownHair" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(5, -61)
+texture = ExtResource("2_oivnp")
+
+[node name="ClownEyeBack" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(4, -50)
+texture = ExtResource("2_cl0v4")
+
+[node name="ClownEyeR" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(23, -55)
+texture = ExtResource("3_1dk1o")
+
+[node name="ClownEyeL" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(-18, -57)
+texture = ExtResource("3_1dk1o")
+
+[node name="ClownHead" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(5, -37)
+texture = ExtResource("3_ko0cy")
+
+[node name="ClownMouth" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(4, -17)
+texture = ExtResource("6_0lcts")
+
+[node name="ClownBrow" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(6, -64)
+texture = ExtResource("6_sryxx")
+
+[node name="ClownNose" type="Sprite2D" parent="PlayerBody"]
+position = Vector2(2, -33)
+texture = ExtResource("8_342s0")
+
+[node name="L_Hand" parent="." node_paths=PackedStringArray("Body") instance=ExtResource("2_eyyle")]
+z_index = 2
+position = Vector2(-169, -14)
+rotation = 0.179769
+OffsetDir = -50.0
+Body = NodePath("../PlayerBody")
+
+[node name="R_Hand" parent="." node_paths=PackedStringArray("Body") instance=ExtResource("2_eyyle")]
+z_index = 2
+position = Vector2(161, 18)
+rotation = -0.340339
+scale = Vector2(-1, 1)
+OffsetDir = 50.0
+Body = NodePath("../PlayerBody")
+
+[node name="L_Shoulder" type="Node2D" parent="."]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwso7d8vs5ogv"]
+
+[ext_resource type="Texture2D" uid="uid://b420kgrv73vu5" path="res://icon.svg" id="1_sh8if"]
+[ext_resource type="PackedScene" uid="uid://bo33dsy43il3r" path="res://Scenes/T_Hand.tscn" id="2_eyyle"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="2_qr44x"]
+
+[node name="Player" type="Node2D"]
+
+[node name="PlayerBody" type="Sprite2D" parent="." node_paths=PackedStringArray("LHand", "RHand")]
+texture = ExtResource("1_sh8if")
+script = ExtResource("2_qr44x")
+LHand = NodePath("../L_Hand")
+RHand = NodePath("../R_Hand")
+MoveSpeed = 100.0
+
+[node name="L_Shoulder" type="Node2D" parent="PlayerBody"]
+
+[node name="R_Shoulder" type="Node2D" parent="PlayerBody"]
+
+[node name="L_Hand" parent="." node_paths=PackedStringArray("Body") instance=ExtResource("2_eyyle")]
+position = Vector2(-476, -164)
+Body = NodePath("../PlayerBody")
+MoveSpeed = 20.0
+
+[node name="R_Hand" parent="." node_paths=PackedStringArray("Body") instance=ExtResource("2_eyyle")]
+position = Vector2(263, 12)
+Body = NodePath("../PlayerBody")

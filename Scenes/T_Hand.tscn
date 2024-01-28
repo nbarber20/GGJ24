@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo33dsy43il3r"]
+
+[ext_resource type="Texture2D" uid="uid://co6mlm3jj366k" path="res://Sprites/clown_hand.tres" id="1_4pfdq"]
+[ext_resource type="Script" path="res://Scripts/hand.gd" id="2_ux1h4"]
+[ext_resource type="Texture2D" uid="uid://bx1ygnmtd3xj5" path="res://Sprites/clown_hand_ruffle.tres" id="3_n2moc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_73q32"]
+radius = 74.0
+
+[node name="Hand" type="Sprite2D"]
+texture = ExtResource("1_4pfdq")
+script = ExtResource("2_ux1h4")
+Radius = 100.0
+HeightLimit = 150.0
+ReturnSpeed = 0.75
+MouseMoveSpeed = 10.0
+ThrowSpeed = 1200.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(-8, 41)
+texture = ExtResource("3_n2moc")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_73q32")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_shape_entered" from="Area2D" to="." method="_on_area_2d_body_shape_entered"]
