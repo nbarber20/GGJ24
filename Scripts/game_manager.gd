@@ -13,11 +13,15 @@ var lives
 var balls = []
 var rng = RandomNumberGenerator.new()
 var ballTimer
+var lost = false
 
 func _ready():
 	startMenu()
 
 func _process(delta):
+	if lost:
+		return
+	
 	if levelRef:
 		timer += delta
 		var time = timer
@@ -29,7 +33,6 @@ func _process(delta):
 		timerText.text = mstr + " : " + sstr
 		
 	for ball in balls:
-		print(ball.global_transform.origin.y)
 		if ball.global_transform.origin.y > 260:
 			dropBall()
 			balls.erase(ball)
@@ -39,7 +42,7 @@ func spawnBall():
 	var newBall = ball.instantiate()
 	var x = rng.randf_range(-300.0, 300.0)
 	newBall.global_transform.origin = Vector2(x, -400)
-	add_child(newBall)
+	levelRef.add_child(newBall)
 	balls.append(newBall)
 
 func startBallTimer():
@@ -47,9 +50,12 @@ func startBallTimer():
 	ballTimer.timeout.connect(onballtimer)
 
 func onballtimer():
+	if lost:
+		return
+	
 	if levelRef:
 		spawnBall()
-		
+	
 	ballTimer.wait_time = balls.size() * 5.0
 	ballTimer.start()
 
@@ -61,6 +67,13 @@ func dropBall():
 		levelRef.updateBg()
 
 func die():
+	for ball in balls:
+		ball.queue_free()
+		
+	lost = true
+	levelRef.lose()
+	var loseTimer = get_tree().create_timer(2)
+	await loseTimer.timeout
 	restartGame()
 
 func restartGame():
@@ -73,6 +86,7 @@ func restartGame():
 		menuRef.queue_free()
 		menuRef = null
 	
+	balls.clear()
 	startMenu()	
 	
 func startMenu():
@@ -87,10 +101,12 @@ func startGame():
 	
 		levelRef = sceneMain.instantiate()
 		add_child(levelRef)
+		levelRef.start()
 		
 		lives = startingLives
 		timer = 0.0
 		timerText.show()
+		
 		spawnBall()
 		
 		ballTimer = Timer.new()
@@ -100,6 +116,7 @@ func startGame():
 		
 		ballTimer.wait_time = balls.size() * 5.0
 		ballTimer.start()
+		lost = false
 
 func _input(event):
 	if event is InputEventMouseButton:

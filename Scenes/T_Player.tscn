@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bwso7d8vs5ogv"]
+[gd_scene load_steps=17 format=3 uid="uid://bwso7d8vs5ogv"]
 
 [ext_resource type="Texture2D" uid="uid://c7g8c8eq5twq6" path="res://Sprites/clown_eye_back.tres" id="2_cl0v4"]
 [ext_resource type="PackedScene" uid="uid://bo33dsy43il3r" path="res://Scenes/T_Hand.tscn" id="2_eyyle"]
@@ -10,91 +10,106 @@
 [ext_resource type="Texture2D" uid="uid://ycbp8x8aevo8" path="res://Sprites/clown_head.tres" id="3_ko0cy"]
 [ext_resource type="Texture2D" uid="uid://y77skdgovwmd" path="res://Sprites/clown_mouth.tres" id="6_0lcts"]
 [ext_resource type="Texture2D" uid="uid://dxao55hh5vxpt" path="res://Sprites/clown_brow.tres" id="6_sryxx"]
-[ext_resource type="Texture2D" uid="uid://ckit4tcq6xjcq" path="res://Sprites/clown_nose.tres" id="8_342s0"]
+[ext_resource type="Texture2D" uid="uid://dn1ldsc2ysw8r" path="res://Sprites/clown_mouth_2.tres" id="11_h41l7"]
+[ext_resource type="Texture2D" uid="uid://cgp7f0cta0588" path="res://Sprites/clown_mouth_3.tres" id="11_kelp7"]
 [ext_resource type="Texture2D" uid="uid://b0p5fgfw2sb6t" path="res://Sprites/clown_cycleSeat.tres" id="12_1if5v"]
 [ext_resource type="Texture2D" uid="uid://br5mdiwepq6en" path="res://Sprites/clown_cycleTire.tres" id="12_8i7em"]
+[ext_resource type="Texture2D" uid="uid://ceh16ujyqjs6j" path="res://Sprites/ball.tres" id="13_vj2vp"]
 [ext_resource type="Texture2D" uid="uid://ddnrov0v6fhm5" path="res://Sprites/clown_cyclePeddal.tres" id="14_jb0ks"]
 
 [node name="Player" type="Node2D"]
 
-[node name="PlayerBody" type="Sprite2D" parent="." node_paths=PackedStringArray("LHand", "RHand", "LFoot", "RFoot", "Wheel")]
+[node name="PlayerBody" type="Sprite2D" parent="." node_paths=PackedStringArray("Mouth", "Rotator", "LEye", "REye", "LHand", "RHand", "LFoot", "RFoot", "Wheel")]
 script = ExtResource("2_qr44x")
+m1 = ExtResource("6_0lcts")
+m2 = ExtResource("11_h41l7")
+m3 = ExtResource("11_kelp7")
+Mouth = NodePath("Rotator/ClownMouth")
+Rotator = NodePath("Rotator")
+LEye = NodePath("Rotator/ClownEyeL")
+REye = NodePath("Rotator/ClownEyeR")
 LHand = NodePath("../L_Hand")
 RHand = NodePath("../R_Hand")
-LFoot = NodePath("ClownCycleSeat/ClownCycleTire/ClownCyclePeddal/ClownShoeL")
-RFoot = NodePath("ClownCycleSeat/ClownCycleTire/ClownCyclePeddal2/ClownShoeR")
-Wheel = NodePath("ClownCycleSeat/ClownCycleTire")
+LFoot = NodePath("Rotator/ClownCycleSeat/ClownCycleTire/ClownCyclePeddal/ClownShoeL")
+RFoot = NodePath("Rotator/ClownCycleSeat/ClownCycleTire/ClownCyclePeddal2/ClownShoeR")
+Wheel = NodePath("Rotator/ClownCycleSeat/ClownCycleTire")
 MoveSpeed = 10.0
 WheelSpeed = 0.01
 MaxX = 550.0
+Lean = 0.05
+EyeRadius = 3.0
+expressionThreshold = 0.75
 
-[node name="ClownCycleSeat" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(-3, 225)
+[node name="Rotator" type="Node2D" parent="PlayerBody"]
+position = Vector2(0, 304)
+
+[node name="ClownCycleSeat" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(-3, -72)
 texture = ExtResource("12_1if5v")
 
-[node name="ClownCycleTire" type="Sprite2D" parent="PlayerBody/ClownCycleSeat"]
+[node name="ClownCycleTire" type="Sprite2D" parent="PlayerBody/Rotator/ClownCycleSeat"]
 position = Vector2(-1, 68)
 texture = ExtResource("12_8i7em")
 
-[node name="ClownCyclePeddal" type="Sprite2D" parent="PlayerBody/ClownCycleSeat/ClownCycleTire"]
+[node name="ClownCyclePeddal" type="Sprite2D" parent="PlayerBody/Rotator/ClownCycleSeat/ClownCycleTire"]
 position = Vector2(1, 0)
 texture = ExtResource("14_jb0ks")
 offset = Vector2(15, 20)
 
-[node name="ClownShoeL" type="Sprite2D" parent="PlayerBody/ClownCycleSeat/ClownCycleTire/ClownCyclePeddal"]
+[node name="ClownShoeL" type="Sprite2D" parent="PlayerBody/Rotator/ClownCycleSeat/ClownCycleTire/ClownCyclePeddal"]
 position = Vector2(31, 40)
 texture = ExtResource("2_p8gp3")
 offset = Vector2(-30, -30)
 
-[node name="ClownCyclePeddal2" type="Sprite2D" parent="PlayerBody/ClownCycleSeat/ClownCycleTire"]
+[node name="ClownCyclePeddal2" type="Sprite2D" parent="PlayerBody/Rotator/ClownCycleSeat/ClownCycleTire"]
 z_index = -1
 position = Vector2(0, -1)
 rotation = 3.14159
 texture = ExtResource("14_jb0ks")
 offset = Vector2(15, 20)
 
-[node name="ClownShoeR" type="Sprite2D" parent="PlayerBody/ClownCycleSeat/ClownCycleTire/ClownCyclePeddal2"]
+[node name="ClownShoeR" type="Sprite2D" parent="PlayerBody/Rotator/ClownCycleSeat/ClownCycleTire/ClownCyclePeddal2"]
 modulate = Color(0.666667, 0.666667, 0.666667, 1)
 position = Vector2(31, 39)
 rotation = 3.14159
 texture = ExtResource("2_p8gp3")
 offset = Vector2(-30, -30)
 
-[node name="ClownBody" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(-8, 85)
+[node name="ClownBody" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(-8, -212)
 texture = ExtResource("2_jf6kt")
 
-[node name="ClownHair" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(5, -61)
+[node name="ClownHair" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(5, -358)
 texture = ExtResource("2_oivnp")
 
-[node name="ClownEyeBack" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(4, -50)
+[node name="ClownEyeBack" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(4, -347)
 texture = ExtResource("2_cl0v4")
 
-[node name="ClownEyeR" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(23, -55)
+[node name="ClownEyeR" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(23, -352)
 texture = ExtResource("3_1dk1o")
 
-[node name="ClownEyeL" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(-18, -57)
+[node name="ClownEyeL" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(-18, -354)
 texture = ExtResource("3_1dk1o")
 
-[node name="ClownHead" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(5, -37)
+[node name="ClownHead" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(5, -334)
 texture = ExtResource("3_ko0cy")
 
-[node name="ClownMouth" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(4, -17)
-texture = ExtResource("6_0lcts")
+[node name="ClownMouth" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(4, -314)
+texture = ExtResource("11_kelp7")
 
-[node name="ClownBrow" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(6, -64)
+[node name="ClownBrow" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(6, -361)
 texture = ExtResource("6_sryxx")
 
-[node name="ClownNose" type="Sprite2D" parent="PlayerBody"]
-position = Vector2(2, -33)
-texture = ExtResource("8_342s0")
+[node name="ClownNose" type="Sprite2D" parent="PlayerBody/Rotator"]
+position = Vector2(2, -330)
+texture = ExtResource("13_vj2vp")
 
 [node name="L_Hand" parent="." node_paths=PackedStringArray("Body") instance=ExtResource("2_eyyle")]
 z_index = 2

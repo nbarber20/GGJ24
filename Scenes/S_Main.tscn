@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://3i0yb0lorpmg"]
+[gd_scene load_steps=13 format=3 uid="uid://3i0yb0lorpmg"]
 
 [ext_resource type="Texture2D" uid="uid://ckw0f46egvncu" path="res://Sprites/bg.png" id="1_6kuf2"]
 [ext_resource type="Texture2D" uid="uid://btqod15mthwm7" path="res://Sprites/stage.png" id="1_cu4qc"]
@@ -6,30 +6,96 @@
 [ext_resource type="PackedScene" uid="uid://bwso7d8vs5ogv" path="res://Scenes/T_Player.tscn" id="1_yjcoj"]
 [ext_resource type="Texture2D" uid="uid://by8preny2d7nv" path="res://Sprites/crowd.png" id="2_6cajj"]
 [ext_resource type="Texture2D" uid="uid://b2s1am7i00v4k" path="res://Sprites/crowdAngery.png" id="2_jie4g"]
+[ext_resource type="Animation" uid="uid://c0y2koekne4f2" path="res://Sprites/anim/king_mallet.res" id="3_am8kl"]
 [ext_resource type="Texture2D" uid="uid://bckhnuyhn3kil" path="res://Sprites/curtains.png" id="4_4rfek"]
+[ext_resource type="SpriteFrames" uid="uid://bkd3406ck6uew" path="res://Sprites/anim/mallet.tres" id="8_5i21g"]
+
+[sub_resource type="Animation" id="Animation_c0u0q"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Stage3:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(50, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Stage3:scale:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.07, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Stage3:scale:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.19, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f6wj8"]
+_data = {
+"RESET": SubResource("Animation_c0u0q"),
+"new_animation": ExtResource("3_am8kl")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dprp0"]
 size = Vector2(1160, 174.5)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("bg")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("bgAnim", "bg", "hammer", "player")]
 script = ExtResource("1_l8cjt")
-bg = NodePath("Stage3")
+bgAnim = NodePath("AnimationPlayer")
+bg = NodePath("AnimationPlayer/Stage3")
+bgHappy = ExtResource("2_6cajj")
 bgAngry = ExtResource("2_jie4g")
+hammer = NodePath("AnimationPlayer/AnimatedSprite2D")
+player = NodePath("Player")
 
-[node name="Stage2" type="Sprite2D" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath(".")
+libraries = {
+"": SubResource("AnimationLibrary_f6wj8")
+}
+
+[node name="Stage2" type="Sprite2D" parent="AnimationPlayer"]
+z_index = -100
 position = Vector2(1, 50)
 scale = Vector2(1.15, 1.15)
 texture = ExtResource("1_6kuf2")
 
-[node name="Stage3" type="Sprite2D" parent="."]
+[node name="Stage3" type="Sprite2D" parent="AnimationPlayer"]
+z_index = -100
 position = Vector2(1, 50)
-scale = Vector2(1.15, 1.15)
+scale = Vector2(1.07, 1.19)
 texture = ExtResource("2_6cajj")
 
-[node name="Stage" type="Sprite2D" parent="."]
+[node name="Stage" type="Sprite2D" parent="AnimationPlayer"]
+z_index = -100
 position = Vector2(1, 50)
 scale = Vector2(1.15, 1.15)
 texture = ExtResource("1_cu4qc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimationPlayer"]
+z_index = 500
+position = Vector2(80, 85)
+rotation = 0.0613936
+scale = Vector2(1.32401, 1.32401)
+sprite_frames = ExtResource("8_5i21g")
+frame = 18
+frame_progress = 1.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
